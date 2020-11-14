@@ -38,6 +38,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   data() {
     var checkAccount = (rule, value, callback) => {
@@ -68,10 +69,22 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
+     submitForm(formName) {
+       console.log('ruleForm=>',this.ruleForm);   
       this.$refs[formName].validate((valid) => {
         if (valid) {
+      axios.post('/auth/api/login?username='+this.ruleForm.name+"&password="+this.ruleForm.pass).then(res=>{
+          console.log('res=>',res);
+          if(res.data.code == '200'){
+          localStorage.setItem("Authorization",res.data.data.token);
+          this.$message.success({message:'登录成功',center: true});
           this.$router.push("/menu");
+          }else if(res.data.code == '401'){
+            this.$message.error({message:'用户名或密码错误',center: true});
+          } else{
+            this.$message.error({message:'登录错误',center: true});
+          }          
+      })
         } else {
           console.log("error submit!!");
           return false;

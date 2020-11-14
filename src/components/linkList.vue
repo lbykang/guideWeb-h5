@@ -63,6 +63,7 @@
         <el-button type="primary" @click="submit">确 定</el-button>
       </div>
     </el-dialog>
+    <el-button :plain="true" @click="hello">错误</el-button>
   </div>
 </template>
 <script>
@@ -180,6 +181,12 @@ export default {
         this.linkInfo = res.data;
         console.log(res.data);
         this.linkInfoImage.push(res.data.linkImage);
+      });
+    },
+      hello() {
+      axios.get("/auth/api/hello").then((res) => {
+        console.log(res.data);
+        this.$message.success(res.data);
       });
     },
     getLinkInfo(id) {

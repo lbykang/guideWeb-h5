@@ -1,20 +1,18 @@
-import Axios from "axios";
-import {
-  Toast
-} from "vant";
+import axios from "axios";
+import { Toast } from "vant";
 
-const axios = Axios.create();
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 
+//http request 请求拦截器，有token值则配置上token值
 axios.interceptors.request.use(
-  // NProgress.start(), // start progress bar
   (config) => {
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem("Authorization");
+    console.log("Authorization："+ token)
     if (token) {
       // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加
-      config.headers.token = `${token}`;
+      config.headers.Authorization = `${token}`;
     }
     return config;
   },

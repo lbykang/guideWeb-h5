@@ -25,6 +25,22 @@ export function addOrEditLink(linkFileVo) {
 }
 
 /**
+ *登录
+ * @param {object} linkFileVo 链接对象
+ */
+export function login(account,pwd) {
+  login.url = "/auth/api/login";
+  return axios({
+    url: login.url,
+    method: "POST",
+    data: {
+      username:account,
+      password:pwd
+    },
+  });
+}
+
+/**
  *获取会员编号
  * @param {string} mobile 手机号
  */

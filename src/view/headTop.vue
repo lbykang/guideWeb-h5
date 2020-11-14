@@ -6,6 +6,7 @@
         item
       }}</el-breadcrumb-item>
     </el-breadcrumb>
+    <!-- <el-button type="primary" plain @click="logout">退出登录</el-button> -->
   </div>
 </template>
 
@@ -18,7 +19,12 @@ export default {
   },
   created() {},
   computed: {},
-  methods: { ...mapActions(["getAdminData"]) },
+  methods: { ...mapActions(["getAdminData"]) ,
+  logout(){
+    localStorage.removeItem('Authorization');
+    this.$message.success({message:'退出登录成功',center: true});
+    this.$router.push("/login");
+  }},
 };
 </script>
 
