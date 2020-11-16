@@ -1,12 +1,12 @@
 <template>
   <div class="header_container">
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/manage' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/menu' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item v-for="(item, index) in $route.meta" :key="index">{{
         item
       }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <!-- <el-button type="primary" plain @click="logout">退出登录</el-button> -->
+    <el-button type="primary" plain @click="logout">退出登录</el-button>
   </div>
 </template>
 
@@ -14,17 +14,18 @@
 import { mapActions } from "vuex";
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   created() {},
   computed: {},
-  methods: { ...mapActions(["getAdminData"]) ,
-  logout(){
-    localStorage.removeItem('Authorization');
-    this.$message.success({message:'退出登录成功',center: true});
-    this.$router.push("/login");
-  }},
+  methods: {
+    ...mapActions(["getAdminData"]),
+    logout() {
+      localStorage.removeItem("Authorization");
+      this.$message.success({ message: "退出登录成功", center: true });
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 

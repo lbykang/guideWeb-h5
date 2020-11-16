@@ -23,26 +23,29 @@
       </div>
     </div>
     <el-dialog width="65%" style="min-height: 550px;" title="内容查看" :visible.sync="dialogFormVisibleCk">
-      <div style="min-height: 100px;">
+      <div style="min-height: 100px;float: left;
+    margin-left: 5%;text-align: center;">
         <h2>对象</h2>
-        <div style="margin: 10px 10px 10px 63px;">
+        <div style="margin: 30px 10px 10px 63px;">
           <span>
             {{guideInfo.object}}
           </span>
         </div>
       </div>
-      <div style="min-height: 100px;">
+      <div style="min-height: 100px;float: left;
+    margin-left: 15%;text-align: center;">
         <h2>一次性告知清单</h2>
-        <div style="margin: 10px 10px 10px 63px;">
+        <div style="margin: 30px 10px 10px 63px;">
           <span>
             {{guideInfo.Informlisting}}
           </span>
         </div>
       </div>
 
-      <div style="min-height: 100px;">
+      <div style="min-height: 100px;float: left;
+    margin-left: 15%;text-align: center;">
         <h2>工作人员及联系方式</h2>
-        <div style="margin: 10px 10px 10px 63px;">
+        <div style="margin: 30px 10px 10px 63px;">
           <span>
             {{guideInfo.staff}}
           </span><br /><br />
@@ -289,5 +292,12 @@ img {
 }
 span {
   font-size: 20px;
+}
+/deep/ .el-dialog__body {
+  padding: 30px 20px;
+  color: #606266;
+  font-size: 14px;
+  word-break: break-all;
+  min-height: 500px;
 }
 </style>

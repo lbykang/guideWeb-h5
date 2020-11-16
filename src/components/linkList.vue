@@ -22,40 +22,40 @@
     </el-pagination>
     <el-dialog title="查看" :visible.sync="dialogFormVisibleCk">
       <el-form :model="linkInfo">
-        <el-form-item label="业务名称" :label-width="formLabelWidth">
-          <el-input disabled v-model="linkInfo.linkName" autocomplete="off"></el-input>
+        <el-form-item label="业务名称：" :label-width="formLabelWidth">
+          {{fromData.guideName}}
         </el-form-item>
-        <el-form-item label="对象信息" :label-width="formLabelWidth">
-          <el-input disabled v-model="linkInfo.linkUrl" autocomplete="off"></el-input>
+        <el-form-item label="对象信息：" :label-width="formLabelWidth">
+          {{fromData.object}}
         </el-form-item>
-        <el-form-item label="告知清单" :label-width="formLabelWidth">
-          <el-input-number v-model="linkInfo.linkOrder" :min="0" label="显示顺序" disabled></el-input-number>
+        <el-form-item label="告知清单：" :label-width="formLabelWidth">
+          {{fromData.Informlisting}}
         </el-form-item>
-        <el-form-item label="工作人员" :label-width="formLabelWidth">
-          <el-input disabled v-model="linkInfo.typeName"></el-input>
+        <el-form-item label="工作人员：" :label-width="formLabelWidth">
+          {{fromData.staff}}
         </el-form-item>
-        <el-form-item label="联系方式" :label-width="formLabelWidth">
-          <el-input disabled v-model="linkInfo.typeName"></el-input>
+        <el-form-item label="联系方式：" :label-width="formLabelWidth">
+          {{fromData.contact}}
         </el-form-item>
       </el-form>
     </el-dialog>
 
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
-      <el-form :model="linkInfo">
+      <el-form :model="fromData">
         <el-form-item label="业务名称" :label-width="formLabelWidth">
-          <el-input v-model="linkInfo.linkName" autocomplete="off"></el-input>
+          <el-input v-model="fromData.guideName" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="对象信息" :label-width="formLabelWidth">
-          <el-input v-model="linkInfo.linkUrl" autocomplete="off"></el-input>
+          <el-input v-model="fromData.object" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="告知清单" :label-width="formLabelWidth">
-          <el-input v-model="linkInfo.linkOrder" label="显示顺序"></el-input>
+          <el-input v-model="fromData.Informlisting" label="显示顺序"></el-input>
         </el-form-item>
         <el-form-item label="工作人员" :label-width="formLabelWidth">
-          <el-input v-model="linkInfo.linkOrder" label="显示顺序"></el-input>
+          <el-input v-model="fromData.staff" label="显示顺序"></el-input>
         </el-form-item>
         <el-form-item label="联系方式" :label-width="formLabelWidth">
-          <el-input v-model="linkInfo.linkOrder" label="显示顺序"></el-input>
+          <el-input v-model="fromData.contact" label="显示顺序"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -63,6 +63,10 @@
         <el-button type="primary" @click="submit">确 定</el-button>
       </div>
     </el-dialog>
+    <el-upload class="avatar-uploader" action="/auth/api/uploadFile" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
     <el-button :plain="true" @click="hello">错误</el-button>
   </div>
 </template>
@@ -104,6 +108,13 @@ export default {
           contact: "0514-4844484",
         },
       ],
+      fromData: {
+        guideName: "法律援助",
+        object: "援助对象",
+        Informlisting: "一次性告知清单",
+        staff: "不约",
+        contact: "0514-4844484",
+      },
 
       currentRow: null,
       offset: 0, //当前也
@@ -177,13 +188,14 @@ export default {
     },
     showLinkInfo(id) {
       this.dialogFormVisibleCk = true;
-      axios.get("/auth/link/getLinkById?id=" + id).then((res) => {
-        this.linkInfo = res.data;
-        console.log(res.data);
-        this.linkInfoImage.push(res.data.linkImage);
-      });
+      console.log(id);
+      // axios.get("/auth/link/getLinkById?id=" + id).then((res) => {
+      //   this.linkInfo = res.data;
+      //   console.log(res.data);
+      //   this.linkInfoImage.push(res.data.linkImage);
+      // });
     },
-      hello() {
+    hello() {
       axios.get("/auth/api/hello").then((res) => {
         console.log(res.data);
         this.$message.success(res.data);
@@ -191,12 +203,13 @@ export default {
     },
     getLinkInfo(id) {
       this.dialogFormVisible = true;
-      axios.get("/auth/link/getLinkById?id=" + id).then((res) => {
-        this.imageUrl = res.data.linkImage;
-        this.linkInfo = res.data;
-        this.linkInfo.id = id;
-        console.log(res.data);
-      });
+      console.log(id);
+      // axios.get("/auth/link/getLinkById?id=" + id).then((res) => {
+      //   this.imageUrl = res.data.linkImage;
+      //   this.linkInfo = res.data;
+      //   this.linkInfo.id = id;
+      //   console.log(res.data);
+      // });
     },
     photoList() {
       let final = [];
